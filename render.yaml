@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: chronos-quantum-trading
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: HOST
+        value: 0.0.0.0
+      - key: QUANTUM_SECURITY_ENABLED
+        value: true
+      - key: RENDER_DEPLOYMENT
+        value: true
