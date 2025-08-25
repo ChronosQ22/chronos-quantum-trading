@@ -1,0 +1,64 @@
+{
+  "version": 2,
+  "name": "chronos-quantum-trading",
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/health",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "QUANTUM_SECURITY_ENABLED": "true",
+    "VERCEL_DEPLOYMENT": "true",
+    "HOST": "0.0.0.0",
+    "PORT": "3000"
+  },
+  "functions": {
+    "server.js": {
+      "includeFiles": "**",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Quantum-Security",
+          "value": "AES-512-ENTANGLED"
+        },
+        {
+          "key": "X-Stealth-Mode",
+          "value": "MAXIMUM-INVISIBILITY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    }
+  ]
+}
